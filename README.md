@@ -1,1 +1,1 @@
-# groth16-verifier-bls12381
+# groth16-verify-from-bellman

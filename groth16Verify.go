@@ -1,34 +1,36 @@
 package bls12381
 
-
 import (
 	"errors"
 	"github.com/consensys/gurvy/bls381/fr"
+	Proof "github.com/esuwu/groth16-verifier-bls12381/proof"
 	VerificationKey "github.com/esuwu/groth16-verifier-bls12381/verificationKey"
 	Verifier "github.com/esuwu/groth16-verifier-bls12381/verifier"
-	Proof "github.com/esuwu/groth16-verifier-bls12381/proof"
 	"math/big"
 )
 
 
 
-func readInputs(inputs []byte) ([]fr.Element, error) {
+func ReadInputs(inputs []byte) ([]fr.Element, error) {
 	var result []fr.Element
+	const sizeUint64 = 8
+	const lenOneFrElement = 4
 
 	if len(inputs) % 32 != 0 {
 		return nil, errors.New("inputs should be % 32 = 0")
 	}
 
-	inputsCountOfFr := len(inputs) / 32
+	lenFrElements := len(inputs) / 32
+	frReprSize := sizeUint64 * lenOneFrElement
 
-	offset := 0
-	oldOffSet := 0
-	frReprSize := 32 // uint64 * 4
-	//скармливаем чанками по 32 байта
-	for i := 0; i < inputsCountOfFr; i++ {
-		offset += frReprSize
+	var currentOffset int
+	var oldOffSet int
+
+	// скармливаем чанками по 32 байта
+	for i := 0; i < lenFrElements; i++ {
+		currentOffset += frReprSize
 		elem := fr.One()
-		elem.SetBytes(inputs[oldOffSet:offset])
+		elem.SetBytes(inputs[oldOffSet:currentOffset])
 		oldOffSet += frReprSize
 
 		result = append(result, elem)
@@ -36,12 +38,6 @@ func readInputs(inputs []byte) ([]fr.Element, error) {
 
 	return result, nil
 }
-
-
-
-
-
-
 
 func makeSliceBigInt(inputs []fr.Element) []*big.Int {
 	publicInput := make([]*big.Int, 0)
@@ -52,7 +48,6 @@ func makeSliceBigInt(inputs []fr.Element) []*big.Int {
 	}
 	return publicInput
 }
-
 
 func Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, error) {
 	buffVkLen := len(vk)
@@ -65,13 +60,13 @@ func Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, error) {
 
 	inputsLen := buffInputsLen / 32
 
-	if (buffVkLen/48) != (inputsLen+8) || (buffProofLen != 192) {
+	if (buffVkLen / 48) != (inputsLen + 8) || (buffProofLen != 192) {
 		return false, errors.New("wrong buffer length")
 	}
 
 	vkT, _ := VerificationKey.GetVerificationKeyFromCompressed(vk)
 	proofT, _ := Proof.GetProofFromCompressed(proof)
-	inputsFr, err := readInputs(inputs)
+	inputsFr, err := ReadInputs(inputs)
 	if err != nil {
 		return false, err
 	}

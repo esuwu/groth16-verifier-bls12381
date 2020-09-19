@@ -21,28 +21,43 @@ func GetVerificationKeyFromCompressed(vk []byte) (*VerificationKey, error) {
 	var g2Repr = make([]byte, 96)
 
 	// Alpha G1
-	reader.Read(g1Repr)
+	_, err := reader.Read(g1Repr)
+	if err != nil {
+		return nil, err
+	}
 	alphaG1, err := bls.NewG1().FromCompressed(g1Repr)
 	if err != nil {
 		return nil, err
 	}
 
 	// Beta G2
-	reader.Read(g2Repr)
+	_, err = reader.Read(g2Repr)
+	if err != nil {
+		return nil, err
+	}
+	if err != nil {
+		return nil, err
+	}
 	betaG2, err := bls.NewG2().FromCompressed(g2Repr)
 	if err != nil {
 		return nil, err
 	}
 
 	// Gamma G2
-	reader.Read(g2Repr)
+	_, err = reader.Read(g2Repr)
+	if err != nil {
+		return nil, err
+	}
 	gammaG2, err := bls.NewG2().FromCompressed(g2Repr)
 	if err != nil {
 		return nil, err
 	}
 
 	// Delta G2
-	reader.Read(g2Repr)
+	_, err = reader.Read(g2Repr)
+	if err != nil {
+		return nil, err
+	}
 	deltaG2, err := bls.NewG2().FromCompressed(g2Repr)
 	if err != nil {
 		return nil, err
@@ -59,6 +74,9 @@ func GetVerificationKeyFromCompressed(vk []byte) (*VerificationKey, error) {
 		}
 
 		g1, err := bls.NewG1().FromCompressed(g1Repr)
+		if err != nil {
+			return nil, err
+		}
 		ic = append(ic, g1)
 	}
 

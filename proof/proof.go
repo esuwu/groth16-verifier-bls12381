@@ -18,21 +18,30 @@ func GetProofFromCompressed(proof []byte) (*Proof, error){
 	var g2Repr = make([]byte, 96)
 
 	// A G1
-	reader.Read(g1Repr)
+	_, err := reader.Read(g1Repr)
+	if err != nil {
+		return nil, err
+	}
 	aG1, err := bls.NewG1().FromCompressed(g1Repr)
 	if err != nil {
 		return nil, err
 	}
 
 	// B G2
-	reader.Read(g2Repr)
+	_, err = reader.Read(g2Repr)
+	if err != nil {
+		return nil, err
+	}
 	bG2, err := bls.NewG2().FromCompressed(g2Repr)
 	if err != nil {
 		return nil, err
 	}
 
 	// C G1
-	reader.Read(g1Repr)
+	_, err = reader.Read(g1Repr)
+	if err != nil {
+		return nil, err
+	}
 	cG1, err := bls.NewG1().FromCompressed(g1Repr)
 	if err != nil {
 		return nil, err

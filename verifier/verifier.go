@@ -8,9 +8,6 @@ import (
 	"math/big"
 )
 
-
-
-
 func ProofVerify(vk *verificationKey.VerificationKey, proof *proof.Proof, inputs []*big.Int) (bool, error) {
 	if len(inputs)+1 != len(vk.Ic) {
 		return false, errors.New("len(inputs)+1 != len(vk.IC)")

@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4281cc71-fef7-4da9-8173-6e2921bf3762" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groth16Verify.go" beforeDir="false" afterPath="$PROJECT_DIR$/groth16Verify.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groth16Verify_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/groth16Verify_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proof/proof.go" beforeDir="false" afterPath="$PROJECT_DIR$/proof/proof.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/verificationKey/verificationKey.go" beforeDir="false" afterPath="$PROJECT_DIR$/verificationKey/verificationKey.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/verifier/verifier.go" beforeDir="false" afterPath="$PROJECT_DIR$/verifier/verifier.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +25,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="wpgycouw" />
   </component>
@@ -34,6 +42,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -50,5 +59,9 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
   </component>
 </project>

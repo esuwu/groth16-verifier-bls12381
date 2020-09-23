@@ -2,7 +2,6 @@ package bls12381
 
 import (
 	"errors"
-	"github.com/consensys/gurvy/bls381/fr"
 	"math/big"
 )
 
@@ -14,12 +13,12 @@ type Bn256 struct {
 
 }
 
-func ReadInputs(inputs []byte) ([]fr.Element, error) {
-	var result []fr.Element
+func ReadInputs(inputs []byte) ([]*big.Int, error) {
+	var result []*big.Int
 	const sizeUint64 = 8
 	const lenOneFrElement = 4
 
-	if len(inputs) % 32 != 0 {
+	if len(inputs)%32 != 0 {
 		return nil, errors.New("inputs should be % 32 = 0")
 	}
 
@@ -29,11 +28,11 @@ func ReadInputs(inputs []byte) ([]fr.Element, error) {
 	var currentOffset int
 	var oldOffSet int
 
-	// скармливаем чанками по 32 байта
+	// Appending every 32 bytes [0..32], [32..64], ...
 	for i := 0; i < lenFrElements; i++ {
 		currentOffset += frReprSize
-		elem := fr.One()
-		elem.SetBytes(inputs[oldOffSet:currentOffset])
+		elem := new(big.Int)
+		elem.SetBytes((inputs)[oldOffSet:currentOffset])
 		oldOffSet += frReprSize
 
 		result = append(result, elem)
@@ -42,15 +41,6 @@ func ReadInputs(inputs []byte) ([]fr.Element, error) {
 	return result, nil
 }
 
-func makeSliceBigInt(inputs []fr.Element) []*big.Int {
-	publicInput := make([]*big.Int, 0)
-	for _, v := range inputs {
-		z := new(big.Int)
-		z.SetBytes(v.Bytes())
-		publicInput = append(publicInput, z)
-	}
-	return publicInput
-}
 
 func (Bls12381) Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, error) {
 	buffVkLen := len(vk)
@@ -78,7 +68,7 @@ func (Bls12381) Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, err
 		return false, err
 	}
 
-	return ProofVerify(vkT, proofT, makeSliceBigInt(inputsFr))
+	return ProofVerify(vkT, proofT, inputsFr)
 }
 
 func (Bn256) Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, error) {

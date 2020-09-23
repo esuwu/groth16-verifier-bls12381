@@ -77,3 +77,19 @@ func Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, error) {
 
 	return Verifier.ProofVerify(vkT, proofT, makeSliceBigInt(inputsFr))
 }
+
+//if len(vk)%48 != 0 {
+//return false, errors.New("invalid vk length, should be multiple of 48")
+//}
+//if len(inputs)%32 != 0 {
+//return false, errors.New("invalid inputs length, should be multiple of 32")
+//}
+//if len(vk)/48 != len(inputs)/32+8 {
+//return false, errors.New("invalid vk or proof length")
+//}
+//if len(proof) != 192 {
+//return false, errors.New("invalid proof length, should be 192 bytes")
+//}
+//
+////TODO: implement function
+//return true, nil

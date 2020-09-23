@@ -3,13 +3,16 @@ package bls12381
 import (
 	"errors"
 	"github.com/consensys/gurvy/bls381/fr"
-	Proof "github.com/esuwu/groth16-verifier-bls12381/proof"
-	VerificationKey "github.com/esuwu/groth16-verifier-bls12381/verificationKey"
-	Verifier "github.com/esuwu/groth16-verifier-bls12381/verifier"
 	"math/big"
 )
 
+type Bls12381 struct {
 
+}
+
+type Bn256 struct {
+
+}
 
 func ReadInputs(inputs []byte) ([]fr.Element, error) {
 	var result []fr.Element
@@ -49,7 +52,7 @@ func makeSliceBigInt(inputs []fr.Element) []*big.Int {
 	return publicInput
 }
 
-func Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, error) {
+func (Bls12381) Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, error) {
 	buffVkLen := len(vk)
 	buffProofLen := len(proof)
 	buffInputsLen := len(inputs)
@@ -64,8 +67,8 @@ func Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, error) {
 		return false, errors.New("wrong buffer length")
 	}
 
-	vkT, _ := VerificationKey.GetVerificationKeyFromCompressed(vk)
-	proofT, _ := Proof.GetProofFromCompressed(proof)
+	vkT, _ := GetVerificationKeyFromCompressed(vk)
+	proofT, _ := GetProofFromCompressed(proof)
 	inputsFr, err := ReadInputs(inputs)
 	if err != nil {
 		return false, err
@@ -75,5 +78,10 @@ func Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, error) {
 		return false, err
 	}
 
-	return Verifier.ProofVerify(vkT, proofT, makeSliceBigInt(inputsFr))
+	return ProofVerify(vkT, proofT, makeSliceBigInt(inputsFr))
+}
+
+func (Bn256) Groth16Verify(vk []byte, proof []byte, inputs []byte) (bool, error) {
+	//TODO: implement function
+	return false, nil
 }

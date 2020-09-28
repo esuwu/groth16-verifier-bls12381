@@ -1,4 +1,4 @@
-package bls12381
+package bls381
 
 import (
 	"errors"
